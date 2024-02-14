@@ -26,7 +26,7 @@ const login = async (req, res) => {
 			{ expiresIn: "2h" }
 		);
 
-		res.json({
+		return res.json({
 			message: `Welcome back! ${userDetails.name}`,
 			token: jwtToken,
 			email: userDetails.email,
@@ -39,23 +39,30 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-	console.log(req.body);
-	const { name, role, email, password } = req.body;
-	try {
-		const userDetails = await User.findOne({ where: { email } }).catch(
-			(error) => console.log(`Error with User models: ${error}`)
-		);
-		if (userDetails) {
-			return res.status(400).json({ message: "User already exists" });
-		}
-		await User.create({ name, role, email, password });
+	const { name, email, password, adminPass, role } = req.body;
+	if (adminPass === process.env.ADMIN_PASS) {
+		try {
+			const userDetails = await User.findOne({ email }).catch(
+				(error) => console.log(`Error with User models: ${error}`)
+			);
+			if (userDetails) {
+				return res.status(400).json({ message: "User already exists" });
+			}
+			await User.create({ name, role, email, password });
 
-		res.json({
-			message: `Thanks for registering! ${name}`,
-		});
-	} catch (error) {
-		console.log(`Error with logging in: ${error}`);
+			return res.json({
+				message: `Thanks for registering! ${name}`,
+			});
+		} catch (error) {
+			res.status(500).json({
+				message: `Internal Server error`,
+			});
+			return console.log(`Error with logging in: ${error}`);
+		}
 	}
+	res.status(400).json({
+		message: `Invalid Admin Pin`,
+	});
 };
 
 module.exports = { login, register };

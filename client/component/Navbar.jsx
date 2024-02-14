@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import { useContext } from 'react'
 import Context from '@/utils/context.js'
+import Link from 'next/link'
 
 const Navbar = () => {
     const router = useRouter()
@@ -21,14 +22,13 @@ const Navbar = () => {
 
     return (
         <nav>
-            <h1>GR Support Tool</h1>
+            <h1><Link href={"/"}>GR Support Tool</Link></h1>
             {!userData?.name ? (
                 <button className="button" onClick={onClickLogin}>
                     Login
                 </button>
             ) : (
                 <div>
-                    <button className="button mx-2">{`Hey ${userData?.name}`}</button>{' '}
                     <button className="button" onClick={onClickLogout}>
                         Logout
                     </button>

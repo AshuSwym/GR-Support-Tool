@@ -63,12 +63,6 @@ const Login = () => {
                     }
                     return router.push('/', undefined, { shallow: false })
                 })
-
-            // if (res?.ok) {
-            // 	setError("");
-            // 	return (router.back());
-            // }
-            // router.push("/profile/login");
         } catch (error) {
             console.log(error)
             toast.error(error?.response?.data?.message)
@@ -78,7 +72,7 @@ const Login = () => {
         <div className="h-full mx-auto max-w-[350px] flex flex-col justify-center items-center text-white">
             <form
                 onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-4 px-4 py-6 rounded-md"
+                className="w-full flex flex-col gap-3 min-w-[350px] px-4 py-6 rounded-md"
             >
                 <div className="input-container p-3">
                     <MailOutlined
