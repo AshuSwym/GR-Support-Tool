@@ -42,8 +42,8 @@ const register = async (req, res) => {
 	const { name, email, password, adminPass, role } = req.body;
 	if (adminPass === process.env.ADMIN_PASS) {
 		try {
-			const userDetails = await User.findOne({ email }).catch(
-				(error) => console.log(`Error with User models: ${error}`)
+			const userDetails = await User.findOne({ email }).catch((error) =>
+				console.log(`Error with User models: ${error}`)
 			);
 			if (userDetails) {
 				return res.status(400).json({ message: "User already exists" });

@@ -1,22 +1,33 @@
+'use client'
 import Head from 'next/head.js'
 import Context from './context.js'
 import { useEffect, useState } from 'react'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
+import { decrypter } from './crypto.js'
 
-const ContextProvider = ({ children }) => {
+const ContextProvider = ({ children, merchantDetailsStorage }) => {
     const authUser = useAuthUser()
     const [userData, setUserData] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+
     const [merchantDetails, setMerchantDetails] = useState({
-        pid: 'ibLF2FZ2MitrMskBHIwtRa22Dg1uZx9VGXtlfiKeZRQ=',
-        token: '5ITlL7GGYdaYIE+NaY+FnItbSgAIbk0Ozjfaf0ehYrY=',
+        pid: '',
+        token: '',
         storeName: '',
         storeUrl: '',
     })
 
-    console.log(merchantDetails);
-
     useEffect(() => {
         setUserData(authUser)
+        if (authUser) {
+            const merchantDetailsStorage =
+                window.localStorage.getItem('merchantDetails')
+            merchantDetails &&
+                setMerchantDetails(
+                    JSON.parse(decrypter(merchantDetailsStorage))
+                )
+        }
+        setTimeout(() => setIsLoading(false), 1000)
     }, [authUser])
 
     return (
@@ -26,6 +37,7 @@ const ContextProvider = ({ children }) => {
                 setUserData,
                 merchantDetails,
                 setMerchantDetails,
+                isLoading,
             }}
         >
             <Head> User Login</Head>

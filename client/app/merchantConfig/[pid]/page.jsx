@@ -14,7 +14,6 @@ const MerchantConfig = ({ params }) => {
     const [mercantConfig, setMerchantConfig] = useState({})
     const [loading, setLoading] = useState(true)
 
-    // console.log(mercantConfig)
     useEffect(() => {
         const getMerchantConfig = async () => {
             try {
@@ -33,9 +32,8 @@ const MerchantConfig = ({ params }) => {
                 setLoading(false)
             }
         }
-        getMerchantConfig()
+        merchantDetails.token && getMerchantConfig()
     }, [params.pid, merchantDetails.token])
-    console.log(JSON.stringify(mercantConfig))
 
     return (
         <div className="pt-[10vh] p-5 h-[100vh] w-full">
@@ -46,10 +44,10 @@ const MerchantConfig = ({ params }) => {
                     </div>
                 ) : (
                     <div
-                        className={`border-2 border-gray-500 backdrop-blur-lg p-4 text-sm h-full overflow-scroll rounded-md`}
+                        className={`no-scrollbar border-2 border-gray-500 backdrop-blur-lg p-4 text-sm h-full overflow-scroll rounded-md`}
                     >
                         <JsonView
-                            className={`${jetBrains_Mono.className} overflow-auto`}
+                            className={`${jetBrains_Mono.className} no-scrollbar text-[1rem] overflow-auto`}
                             src={mercantConfig}
                             theme="atom"
                         />

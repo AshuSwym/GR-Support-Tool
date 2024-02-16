@@ -1,5 +1,14 @@
 const mongoose = require("mongoose");
 
+const AccessStack = new mongoose.Schema(
+	{
+		email: {
+			type: String,
+		},
+	},
+	{ timestamps: true }
+);
+
 const PIDMapSchema = new mongoose.Schema(
 	{
 		storeName: {
@@ -30,11 +39,7 @@ const PIDMapSchema = new mongoose.Schema(
 			type: String,
 			require: true,
 		},
-		accessStack: [
-			{
-				type: String,
-			},
-		],
+		accessStack: [AccessStack],
 	},
 	{ timestamps: true }
 );

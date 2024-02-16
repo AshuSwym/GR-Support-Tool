@@ -21,19 +21,21 @@ export default function RootLayout({ children }) {
             <AuthProvider store={store}>
                 <ContextProvider>
                     <body
-                        className={`${spaceGrotesk.className} text-slate-50 relative max-w-[1320px] mx-auto flex flex-col h-[100vh] bg-hero bg-cover bg-fill`}
+                        className={`${spaceGrotesk.className} text-slate-50 w-full h-[100vh] bg-hero bg-cover bg-fill`}
                     >
-                        <Toaster
-                            toastOptions={{
-                                style: {
-                                    border: '1px gray solid',
-                                    color: '#FFF',
-                                    background: '#000',
-                                },
-                            }}
-                        />
-                        <Navbar className="" />
-                        <main className="grow flex">{children}</main>
+                        <div className="max-w-[1320px] h-full mx-auto relative flex flex-col">
+                            <Toaster
+                                toastOptions={{
+                                    style: {
+                                        border: '1px gray solid',
+                                        color: '#FFF',
+                                        background: '#000',
+                                    },
+                                }}
+                            />
+                            <Navbar className="" />
+                            <main className="grow flex">{children}</main>
+                        </div>
                     </body>
                 </ContextProvider>
             </AuthProvider>

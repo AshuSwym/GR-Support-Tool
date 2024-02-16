@@ -1,4 +1,5 @@
 const PidMap = require("../models/Map.schema");
+const { queryFromPostgres } = require("../utils/dbConfig");
 
 const setPid = async (req, res) => {
 	const { pid, accessToken, canAccess, storeUrl, storeName } = req.body;
@@ -43,17 +44,20 @@ const setPid = async (req, res) => {
 	return res.json({ message: "Creation successful" });
 };
 
-const getTokenFromPid = async (req, res) => {
+const getToken = async (req, res) => {
 	const userEmail = req.user.email;
 	const { pid, storeUrl, storeName } = req.body;
 	let pidDetails = null;
 
 	if (pid) pidDetails = await PidMap.findOne({ pid: pid });
-	if (storeName) pidDetails = PidMap.findOne({ storeName: storeName });
-	if (storeUrl) pidDetails = PidMap.findOne({ storeUrl: storeUrl });
+	else if (storeName)
+		pidDetails = await PidMap.findOne({ storeName: { $regex: storeName } });
+	else if (storeUrl)
+		pidDetails = await PidMap.findOne({ storeUrl: storeUrl });
 
 	if (pidDetails) {
-		await PidMap.updateOne({ pip: pid }, { $push: { accessStack: userEmail } });
+		pidDetails.accessStack.push({ email: userEmail });
+		await pidDetails.save();
 		return res.json({
 			token: pidDetails.accessToken,
 			storeName: pidDetails.storeName,
@@ -63,4 +67,12 @@ const getTokenFromPid = async (req, res) => {
 	return res.status(400).json("No Such store found");
 };
 
-module.exports = { setPid , getTokenFromPid};
+const getTokenFromPid = async (req, res) => {
+	const userEmail = req.user.email;
+	const { pid, storeUrl, storeName } = req.body;
+	const query = `SELECT "shopDomain", "adminApiAccessToken", "shopName", scopes, "storefrontApiAccessToken", "clientAppId", "clientAppSecret", "shopOwner", "platformShopObject", "currencyFormat", "appAccessToken"
+					FROM "Gift Registry"."MerchantConfig" where "shopName" like '${storeName}%';`;
+	res.json(queryFromPostgres(query));
+};
+
+module.exports = { setPid, getTokenFromPid, getToken };

@@ -8,6 +8,7 @@ import Spinner from './Spinner.jsx'
 import { SearchOutlined } from '@ant-design/icons'
 import Context from '@/utils/context.js'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import { encrypter } from '@/utils/crypto.js'
 
 const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
     const { merchantDetails, setMerchantDetails } = useContext(Context)
@@ -35,9 +36,14 @@ const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
                         },
                     }
                 )
-                .then((res) =>
+                .then((res) => {
                     setMerchantDetails({ ...res.data, pid: searchString })
-                )
+                    const merchantData = encrypter(
+                        JSON.stringify({ ...res.data, pid: searchString })
+                    )
+                    window.localStorage.setItem('merchantDetails', merchantData)
+                    console.log(merchantData)
+                })
                 .catch((error) => console.log(error))
         } catch (error) {
             console.log(error.message)
@@ -51,7 +57,7 @@ const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="dialog-container z-0"
+                    className="dialog-container"
                     onClose={closeModal}
                 >
                     <div className="min-h-screen px-4 text-center">
