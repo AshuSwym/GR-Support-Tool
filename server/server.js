@@ -8,9 +8,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const auth = require("./routes/auth");
-const pid = require("./routes/pid")
+const pid = require("./routes/pid");
 const verifyJWT = require("./middleware/verifyJwt");
 const changeLogger = require("./middleware/changeLogger");
+const { checkConnection } = require("./utils/dbConfig");
 
 const app = express();
 dotenv.config();
@@ -35,12 +36,19 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 app.use("/user", auth);
 app.use(verifyJWT);
 app.use(changeLogger);
-app.use('/api', pid);
+app.use("/api", pid);
 
 try {
-	app.listen(PORT, () => {
-		mongoose.connect(process.env.MONGO_URI);
-		console.log(`Database connected`);
+	app.listen(PORT, async () => {
+		await mongoose.connect(process.env.MONGO_URI).then(() => {
+			console.log(`MongoDB connected`);
+		});
+		try {
+			await checkConnection();
+		} catch(error) {
+			console.log(error);
+		}
+
 		console.log(`Server listening on Port ${PORT}`);
 	});
 } catch (error) {
