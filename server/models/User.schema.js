@@ -1,5 +1,15 @@
 const mongoose = require("mongoose");
 
+const ChangeLog = new mongoose.Schema(
+	{
+		id: {
+			type: String,
+			require
+		},
+	},
+	{ timestamps: true }
+);
+
 const UserSchema = new mongoose.Schema(
 	{
 		name: {
@@ -20,7 +30,7 @@ const UserSchema = new mongoose.Schema(
 			require: true,
 		},
 		changeLogs: {
-			type: String,
+			type: [ChangeLog],
 		},
 	},
 	{ timestamps: true }

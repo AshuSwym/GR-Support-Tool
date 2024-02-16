@@ -10,6 +10,7 @@ const cors = require("cors");
 const auth = require("./routes/auth");
 const pid = require("./routes/pid")
 const verifyJWT = require("./middleware/verifyJwt");
+const changeLogger = require("./middleware/changeLogger");
 
 const app = express();
 dotenv.config();
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 app.use("/user", auth);
 app.use(verifyJWT);
+app.use(changeLogger);
 app.use('/api', pid);
 
 try {
