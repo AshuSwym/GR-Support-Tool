@@ -8,7 +8,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const auth = require("./routes/auth");
-const pid = require("./routes/pid");
+const pid = require("./routes/getAccessTokens");
+const getData = require("./routes/getData");
 const verifyJWT = require("./middleware/verifyJwt");
 const changeLogger = require("./middleware/changeLogger");
 const { checkConnection } = require("./utils/dbConfig");
@@ -37,6 +38,7 @@ app.use("/user", auth);
 app.use(verifyJWT);
 app.use(changeLogger);
 app.use("/api", pid);
+app.use("/getData", getData);
 
 try {
 	app.listen(PORT, async () => {
@@ -45,7 +47,7 @@ try {
 		});
 		try {
 			await checkConnection();
-		} catch(error) {
+		} catch (error) {
 			console.log(error);
 		}
 

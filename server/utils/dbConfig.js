@@ -1116,8 +1116,11 @@ let removePageConfigured = async function (shopDomain, themeId) {
 
 let getMerchantConfig = async function (domain) {
 	let filteredConfig = await MerchantConfig.findAll({
+		attributes: ["pid", "shopDomain", "shopName", "appAccessToken"],
 		where: {
-			shopDomain: domain,
+			shopDomain: {
+				[Sequelize.Op.like]: `%${domain}%`,
+			},
 		},
 	});
 	return filteredConfig;

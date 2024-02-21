@@ -1,5 +1,5 @@
 const express = require("express");
-const { getTokenFromShopDomain } = require("../controllers/setPid");
+const { getTokenFromShopDomain } = require("../controllers/getAccessTokens");
 
 const router = express.Router();
 
