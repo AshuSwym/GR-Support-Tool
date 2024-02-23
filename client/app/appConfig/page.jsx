@@ -74,7 +74,6 @@ const MerchantConfig = () => {
                     }
                 )
                 setAppConfig(response.data)
-                console.log(response)
                 setLoading(false)
             } catch (error) {
                 console.error('Error fetching merchant config:', error)
@@ -176,7 +175,7 @@ const MerchantConfig = () => {
                                 }
                             >
                                 <div className="data-tiles">
-                                    <h1>Disable Checkout</h1>
+                                    <h1>Vintage Toggle Metafield</h1>
                                     {
                                         appConfig?.[0]?.featuresEnabled
                                             ?.vintageToggleMetafieldId
