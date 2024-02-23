@@ -1,23 +1,27 @@
 'use client'
 
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios'
+import axios from '../utils/axios'
 import Link from 'next/link'
 import { Fragment, useContext, useState } from 'react'
 import Spinner from './Spinner.jsx'
 import { SearchOutlined } from '@ant-design/icons'
 import Context from '@/utils/context.js'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
-import { encrypter } from '@/utils/crypto.js'
 
-const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
+const SearchMerchant = ({ isOpen, setIsOpen }) => {
     const { merchantDetails, setMerchantDetails } = useContext(Context)
     const authHeader = useAuthHeader()
     const [searchString, setSearchString] = useState('')
 
+    const setDataToLocalstorage = (merchantDetail) => {
+        setMerchantDetails(merchantDetail);
+        window.localStorage.clear();
+        window.localStorage.setItem('merchantDetails', JSON.stringify(merchantDetail))
+    }
+
     const [isLoading, setIsLoading] = useState(false)
 
-    const openModal = () => setIsOpen(true)
     const closeModal = () => setIsOpen(false)
 
     const handleSubmit = async (e) => {
@@ -26,9 +30,9 @@ const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
         try {
             await axios
                 .post(
-                    `http://localhost:5000/api/getToken`,
+                    `/api/getTokenFromShopDomain`,
                     {
-                        pid: searchString,
+                        shopDomain: searchString,
                     },
                     {
                         headers: {
@@ -37,12 +41,8 @@ const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
                     }
                 )
                 .then((res) => {
-                    setMerchantDetails({ ...res.data, pid: searchString })
-                    const merchantData = encrypter(
-                        JSON.stringify({ ...res.data, pid: searchString })
-                    )
-                    window.localStorage.setItem('merchantDetails', merchantData)
-                    console.log(merchantData)
+                    setMerchantDetails(res.data)
+                    console.log(res.data)
                 })
                 .catch((error) => console.log(error))
         } catch (error) {
@@ -110,28 +110,38 @@ const SearchMerchant = ({ isOpen, setIsOpen, route }) => {
                                         />
                                     </button>
                                 </form>
-                                <div className="no-scrollbar min-h-[100px] max-h-[200px] py-3 mx-auto">
-                                    {merchantDetails?.storeUrl ? (
-                                        <Link
-                                            href={`${route}/${merchantDetails?.pid}`}
-                                            key={merchantDetails?.pid}
-                                            onClick={() =>
-                                                setTimeout(
-                                                    () => closeModal(),
-                                                    300
-                                                )
-                                            }
-                                            className="dialog-btn flex max-h-[100px] flex-row px-2 gap-3 py-3 border-2 rounded-xl border-red-100"
-                                        >
-                                            <div className="flex justify-between flex-col px-1 truncate w-full">
-                                                <h4 className="text-md font-semibold text-clip">
-                                                    {merchantDetails?.storeName}
-                                                </h4>
-                                                <div className="text-slate-500 capitalize text-sm">
-                                                    {merchantDetails?.storeUrl}
+                                <div className="no-scrollbar searchModal">
+                                    {merchantDetails?.[0] ? (
+                                        merchantDetails.map(
+                                            (merchantDetail) => (
+                                                <div
+                                                    key={merchantDetail?.pid}
+                                                    onClick={() =>
+                                                        setTimeout(() => {
+                                                            closeModal()
+                                                            setDataToLocalstorage(
+                                                                merchantDetail
+                                                            )
+                                                        }, 300)
+                                                    }
+                                                    className="dialog-btn flex max-h-[100px] flex-row px-2 gap-3 py-3 border-2 rounded-xl border-red-100"
+                                                    replace
+                                                >
+                                                    <div className="flex justify-between flex-col px-1 truncate w-full">
+                                                        <h4 className="text-md font-semibold text-clip">
+                                                            {
+                                                                merchantDetail?.shopName
+                                                            }
+                                                        </h4>
+                                                        <div className="text-slate-500 capitalize text-sm">
+                                                            {
+                                                                merchantDetail?.shopDomain
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
+                                            )
+                                        )
                                     ) : (
                                         <div className="text-center">
                                             <br />

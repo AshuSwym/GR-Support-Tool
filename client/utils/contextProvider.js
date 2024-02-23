@@ -3,18 +3,18 @@ import Head from 'next/head.js'
 import Context from './context.js'
 import { useEffect, useState } from 'react'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
-import { decrypter } from './crypto.js'
 
-const ContextProvider = ({ children, merchantDetailsStorage }) => {
+const ContextProvider = ({ children }) => {
     const authUser = useAuthUser()
     const [userData, setUserData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     const [merchantDetails, setMerchantDetails] = useState({
         pid: '',
         token: '',
-        storeName: '',
-        storeUrl: '',
+        shopDomain: '',
+        shopName: '',
     })
 
     useEffect(() => {
@@ -23,11 +23,9 @@ const ContextProvider = ({ children, merchantDetailsStorage }) => {
             const merchantDetailsStorage =
                 window.localStorage.getItem('merchantDetails')
             merchantDetails &&
-                setMerchantDetails(
-                    JSON.parse(decrypter(merchantDetailsStorage))
-                )
+                setMerchantDetails(JSON.parse(merchantDetailsStorage))
         }
-        setTimeout(() => setIsLoading(false), 1000)
+        setTimeout(() => setIsLoading(false), 100)
     }, [authUser])
 
     return (
@@ -38,6 +36,8 @@ const ContextProvider = ({ children, merchantDetailsStorage }) => {
                 merchantDetails,
                 setMerchantDetails,
                 isLoading,
+                isOpen,
+                setIsOpen
             }}
         >
             <Head> User Login</Head>

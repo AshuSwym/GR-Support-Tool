@@ -10,7 +10,7 @@
     scroll-behavior: smooth;
 }
 
-body{
+body {
     @apply w-full;
 }
 
@@ -68,11 +68,15 @@ body{
 }
 
 .dialog-btn {
-    @apply flex max-h-[100px] flex-row px-5 gap-3 py-3 border-2 rounded-md border-gray-300 mt-3;
+    @apply flex max-h-[100px] flex-row px-5 gap-3 py-3 border-2 rounded-md border-gray-300 mt-3 cursor-pointer hover:bg-slate-900 duration-500;
+}
+
+.searchModal {
+    @apply overflow-scroll min-h-[100px] max-h-[200px] py-3 mx-auto;
 }
 
 .card {
-    @apply border-2 border-slate-500 backdrop-blur-sm p-3 sm:p-5 flex flex-col justify-center rounded-md max-w-[400px] min-h-[125px] cursor-pointer;
+    @apply border-2 border-slate-500 backdrop-blur-sm p-3 sm:p-5 flex flex-col justify-center rounded-md max-w-[400px] min-h-[125px] h-fit cursor-pointer;
 }
 
 .button {
@@ -85,6 +89,17 @@ h1 {
 
 h2 {
     @apply text-sm font-semibold font-sans tracking-wider text-slate-500;
+}
+
+.data-tiles {
+    @apply break-words flex flex-col justify-between gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
+}
+.data-tiles > h1 {
+    @apply text-base text-slate-400 font-light;
+}
+
+.copyToClipboard {
+    @apply w-full sm:w-fit break-words cursor-pointer hover:bg-slate-700 duration-500;
 }
 
 nav {

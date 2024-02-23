@@ -6,6 +6,7 @@ import AuthProvider from 'react-auth-kit/AuthProvider'
 import createStore from 'react-auth-kit/createStore'
 import { Space_Grotesk } from 'next/font/google'
 import ContextProvider from '@/utils/contextProvider.js'
+import { useState } from 'react'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 const store = createStore({
@@ -16,6 +17,7 @@ const store = createStore({
 })
 
 export default function RootLayout({ children }) {
+
     return (
         <html lang="en">
             <AuthProvider store={store}>
@@ -33,8 +35,12 @@ export default function RootLayout({ children }) {
                                     },
                                 }}
                             />
-                            <Navbar className="" />
-                            <main className="grow flex">{children}</main>
+                            <Navbar />
+                            <main
+                                className="grow flex"
+                            >
+                                {children}
+                            </main>
                         </div>
                     </body>
                 </ContextProvider>

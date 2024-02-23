@@ -1,12 +1,13 @@
 'use client'
 import Context from '@/utils/context'
 import { useContext } from 'react'
-import Link from 'next/link'
 import { ViewMerchantConfig } from '@/component/ViewMerchantConfig'
-import MerchantConfig from './merchantConfig/[pid]/page'
+import { ViewAppConfig } from '@/component/ViewAppConfig'
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 
-export default function Home() {
-    const { userData, isLoading } = useContext(Context)
+export default function Home({ isOpen, setIsOpen }) {
+    const { userData, isLoading, merchantDetails } = useContext(Context)
+    const user = useAuthUser()
     const toRender = !userData?.name ? (
         <main className="my-auto mx-auto text-center p-8 max-w-[600px]">
             <h1 className="text-4xl tracking-tight leading-[3rem] text-slate-50">
@@ -20,8 +21,22 @@ export default function Home() {
             </p>
         </main>
     ) : (
-        <main className="mt-[10vh] p-5">
-            <ViewMerchantConfig />
+        <main className="mt-[10vh] ">
+            <div className="px-5 text-xl font-bold tracking-wider">
+                Hey {user.name} 👋🏼{' '}
+                {merchantDetails.shopName && (
+                    <span>
+                        , you're looking at{' '}
+                        <span className="p-2 bg-slate-300 rounded-md text-gray-900">
+                            {merchantDetails?.shopName}
+                        </span>
+                    </span>
+                )}
+            </div>
+            <div className="flex flex-wrap gap-2 p-5 place-content-start">
+                <ViewMerchantConfig isOpen={isOpen} setIsOpen={setIsOpen} />
+                <ViewAppConfig isOpen={isOpen} setIsOpen={setIsOpen} />
+            </div>
         </main>
     )
 

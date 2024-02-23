@@ -10,7 +10,9 @@ const fetchMerchantConfig = async (req, res) => {
 				},
 			})
 			.then((response) => res.json(response.data))
-			.catch((error) => res.json(error.message));
+			.catch((error) => {
+				res.status(401).json(error);
+			});
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -26,7 +28,9 @@ const fetchAppConfig = async (req, res) => {
 				},
 			})
 			.then((response) => res.json(response.data))
-			.catch((error) => res.json(error.message));
+			.catch((error) => {
+				res.status(401).json(error);
+			});
 	} catch (error) {
 		console.log(error.message);
 	}
