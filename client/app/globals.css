@@ -92,9 +92,17 @@ h2 {
 }
 
 .data-tiles {
-    @apply break-words flex flex-col justify-between gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
+    @apply break-words h-fit flex flex-col justify-between gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
 }
 .data-tiles > h1 {
+    @apply text-base text-slate-400 font-light;
+}
+
+.json-tiles{
+    @apply break-words h-fit flex flex-col  justify-start gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
+}
+
+.json-tiles > h1 {
     @apply text-base text-slate-400 font-light;
 }
 

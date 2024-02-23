@@ -121,17 +121,68 @@ const MerchantConfig = () => {
                             <h1>Events</h1>
                             <div className="flex flex-wrap gap-2">
                                 {appConfig?.[0]?.eventTypes.map((event) => (
-                                    <div className="px-2 bg-slate-300 rounded-md text-gray-900">
+                                    <div
+                                        key={event}
+                                        className="px-2 bg-slate-300 rounded-md text-gray-900"
+                                    >
                                         {capitalize(event)}
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <div className="data-tiles w-full">
-                            <h1>Features Enabled</h1>
-                            <div className="flex flex-wrap gap-2">
-                                
+                        <div className="json-tiles">
+                            <h1>Address Masking</h1>
+                            <div className="overflow-auto">
+                                <JsonView
+                                    className="text-sm sm:text-base"
+                                    src={
+                                        appConfig?.[0]?.featuresEnabled
+                                            ?.addressMasking
+                                    }
+                                />
                             </div>
+                        </div>
+                        <div className="json-tiles">
+                            <h1>Discount Features</h1>
+                            <div className="overflow-auto">
+                                <JsonView
+                                    className="text-sm sm:text-base"
+                                    src={
+                                        appConfig?.[0]?.featuresEnabled
+                                            ?.discountFeature
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className="w-full sm:w-fit flex flex-col gap-2">
+                            <CopyToClipboard
+                                text={
+                                    appConfig?.[0]?.featuresEnabled
+                                        ?.disableCheckoutOnInventoryLapse
+                                }
+                            >
+                                <div className="data-tiles">
+                                    <h1>Disable Checkout</h1>
+                                    {
+                                        appConfig?.[0]?.featuresEnabled
+                                            ?.disableCheckoutOnInventoryLapse
+                                    }
+                                </div>
+                            </CopyToClipboard>
+                            <CopyToClipboard
+                                text={
+                                    appConfig?.[0]?.featuresEnabled
+                                        ?.vintageToggleMetafieldId
+                                }
+                            >
+                                <div className="data-tiles">
+                                    <h1>Disable Checkout</h1>
+                                    {
+                                        appConfig?.[0]?.featuresEnabled
+                                            ?.vintageToggleMetafieldId
+                                    }
+                                </div>
+                            </CopyToClipboard>
                         </div>
                     </div>
                 )}

@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { ViewMerchantConfig } from '@/component/ViewMerchantConfig'
 import { ViewAppConfig } from '@/component/ViewAppConfig'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
+import Link from 'next/link'
 
 export default function Home({ isOpen, setIsOpen }) {
     const { userData, isLoading, merchantDetails } = useContext(Context)
@@ -21,16 +22,13 @@ export default function Home({ isOpen, setIsOpen }) {
             </p>
         </main>
     ) : (
-        <main className="mt-[10vh] ">
-            <div className="px-5 text-xl font-bold tracking-wider">
+        <main className="mt-[10vh] w-full">
+            <div className="px-5 flex flex-wrap justify-between items-center gap-3 text-xl font-bold tracking-wider">
                 Hey {user.name} 👋🏼{' '}
                 {merchantDetails.shopName && (
-                    <span>
-                        , you're looking at{' '}
-                        <span className="p-2 bg-slate-300 rounded-md text-gray-900">
-                            {merchantDetails?.shopName}
-                        </span>
-                    </span>
+                    <Link target="_blank" href={`https://${merchantDetails?.shopDomain}`} className="p-2 border-2 border-blue-400 text-lg rounded-md text-gray-100">
+                        {merchantDetails?.shopName}
+                    </Link>
                 )}
             </div>
             <div className="flex flex-wrap gap-2 p-5 place-content-start">
