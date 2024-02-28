@@ -3,32 +3,23 @@ import Spinner from '@/component/Spinner'
 import Context from '@/utils/context'
 import axios from '../../utils/axios'
 import { useContext, useEffect, useState } from 'react'
-import JsonView from 'react18-json-view'
 import 'react18-json-view/src/style.css'
 import { getDate, capitalize } from '@/utils/utilFunctions'
-import { JetBrains_Mono } from 'next/font/google'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import CopyToClipboard from '@/component/ClickToCopy'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-const jetBrains_Mono = JetBrains_Mono({ subsets: ['latin'] })
-
-/**
- * Update The Checking System of the Change
- *
- */
 
 const MerchantConfig = () => {
     const { merchantDetails } = useContext(Context)
     const [merchantConfig, setMerchantConfig] = useState()
     const [loading, setLoading] = useState(true)
     const authHeader = useAuthHeader()
-    const router = useRouter();
+    const router = useRouter()
 
     useEffect(() => {
-        if(!authHeader)
-            return router.push('/user/login')
-        setLoading(true);
+        if (!authHeader) return router.push('/user/login')
+        setLoading(true)
         const getMerchantConfig = async () => {
             try {
                 const response = await axios.post(
@@ -44,7 +35,7 @@ const MerchantConfig = () => {
                 setLoading(false)
             } catch (error) {
                 console.error('Error fetching merchant config:', error)
-                setMerchantConfig(error.message);
+                setMerchantConfig(error.message)
                 toast.error(error.message)
                 setLoading(false)
             }
@@ -53,7 +44,7 @@ const MerchantConfig = () => {
     }, [merchantDetails?.pid, merchantDetails?.appAccessToken])
 
     return (
-        <div className="pt-[10vh] p-5 h-[100vh] w-full">
+        <div className="h-full w-full">
             <div className="h-full">
                 {loading || !merchantConfig?.[0].pid ? (
                     <div className="h-full flex flex-col justify-center">

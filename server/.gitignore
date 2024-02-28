@@ -34,3 +34,6 @@ next-env.d.ts
 
 #ide
 .idea
+
+#Testing Data
+sampleData.json

@@ -10,8 +10,11 @@ const cors = require("cors");
 const auth = require("./routes/auth");
 const pid = require("./routes/getAccessTokens");
 const getData = require("./routes/getData");
+const edit = require("./routes/editAppConfig");
+
 const verifyJWT = require("./middleware/verifyJwt");
 const changeLogger = require("./middleware/changeLogger");
+
 const { checkConnection } = require("./utils/dbConfig");
 
 const app = express();
@@ -39,7 +42,7 @@ app.use(verifyJWT);
 app.use(changeLogger);
 app.use("/api", pid);
 app.use("/getData", getData);
-
+app.use("/edit", edit);
 try {
 	app.listen(PORT, async () => {
 		await mongoose.connect(process.env.MONGO_URI).then(() => {

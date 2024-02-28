@@ -17,13 +17,12 @@ const store = createStore({
 })
 
 export default function RootLayout({ children }) {
-
     return (
-        <html lang="en">
+        <html className="no-scrollbar" lang="en">
             <AuthProvider store={store}>
                 <ContextProvider>
                     <body
-                        className={`${spaceGrotesk.className} text-slate-50 w-full h-[100vh] bg-hero bg-cover bg-fill`}
+                        className={`${spaceGrotesk.className} no-scrollbar text-slate-50 w-full h-[100vh] bg-hero bg-cover bg-fill`}
                     >
                         <div className="max-w-[1320px] h-full mx-auto relative flex flex-col">
                             <Toaster
@@ -36,9 +35,7 @@ export default function RootLayout({ children }) {
                                 }}
                             />
                             <Navbar />
-                            <main
-                                className="grow flex"
-                            >
+                            <main className="no-scrollbar grow flex overflow-auto">
                                 {children}
                             </main>
                         </div>
