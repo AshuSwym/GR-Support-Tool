@@ -42,8 +42,19 @@ const ModifyConfig = () => {
             const body = {
                 ...merchantDetails,
                 payload: {
-                    eventTypes: eventTypes,
-                    featuresEnabled: featuresEnabled,
+                    eventTypes: eventTypes.filter((value) => !(value === "")),
+                    featuresEnabled: {
+                        ...featuresEnabled,
+                        discountFeature: featuresEnabled?.cartCheckout
+                            ? {
+                                  title: featuresEnabled?.discountFeature.title,
+                                  value: 0,
+                                  valueType: 'PERCENTAGE',
+                              }
+                            : {
+                                  title: featuresEnabled?.discountFeature.title,
+                              },
+                    },
                 },
             }
             const response = await axios.post(`/edit/editAppConfig`, body, {

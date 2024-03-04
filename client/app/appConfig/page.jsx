@@ -63,7 +63,7 @@ const AppConfig = () => {
                     )
                 ) : (
                     <div
-                        className={`no-scrollbar flex flex-col flex-wrap place-content-start items-stretch gap-2 p-4 text-sm h-full overflow-scroll`}
+                        className={`no-scrollbar flex flex-wrap place-content-start items-stretch gap-2 p-4 text-sm h-full overflow-scroll`}
                     >
                         <CopyToClipboard text={appConfig?.[0].pid}>
                             <div className="data-tiles">
