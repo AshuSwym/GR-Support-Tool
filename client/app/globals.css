@@ -99,10 +99,17 @@ h2 {
 }
 
 .json-tiles{
-    @apply break-words h-fit flex flex-col  justify-start gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
+    @apply break-words h-fit flex flex-col justify-start gap-1 font-medium text-lg border-2 border-slate-500 w-full sm:w-fit p-3 rounded-md bg-gradient-to-r from-slate-900;
 }
 
 .json-tiles > h1 {
+    @apply text-base text-slate-400 font-light;
+}
+
+.update-tiles {
+    @apply break-words h-fit flex flex-col justify-between gap-1 font-medium text-lg border-2 border-slate-500 w-full p-3 rounded-md bg-gradient-to-r from-slate-900;
+}
+.update-tiles > h1 {
     @apply text-base text-slate-400 font-light;
 }
 
@@ -111,7 +118,7 @@ h2 {
 }
 
 nav {
-    @apply absolute w-full p-5 text-inherit flex justify-between items-center;
+    @apply w-full p-5 text-inherit flex justify-between items-center;
 }
 
 .hero-section {

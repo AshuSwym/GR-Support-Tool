@@ -5,7 +5,7 @@ import axios from '../../utils/axios'
 import { useContext, useEffect, useState } from 'react'
 import JsonView from 'react18-json-view'
 import 'react18-json-view/src/style.css'
-import { getDate, capitalize } from '@/utils/utilFunctions'
+import { capitalize } from '@/utils/utilFunctions'
 import { JetBrains_Mono } from 'next/font/google'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import CopyToClipboard from '@/component/ClickToCopy'
@@ -13,48 +13,9 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 const jetBrains_Mono = JetBrains_Mono({ subsets: ['latin'] })
 
-/**
- * Update The Checking System of the Change
- *
- */
-
-const MerchantConfig = () => {
+const AppConfig = () => {
     const { merchantDetails } = useContext(Context)
-    const [appConfig, setAppConfig] = useState([
-        {
-            shopDomain: 'string',
-            pid: 'string',
-            eventTypes: ['string'],
-            featuresEnabled: {
-                addressMasking: {
-                    enableAddressMasking: true,
-                    selectedCheckout: 'giftCard',
-                    checkout: {
-                        stripe: {},
-                        giftCard: {},
-                    },
-                    minInventoryLimit: 0,
-                    swymAddressMaskingMetafield: 2492670699132,
-                },
-                vintageToggleMetafieldId: 2492670699132,
-                disableCheckoutOnInventoryLapse: 2492670699132,
-                cartCheckout: false,
-                discountFeature: {
-                    value: 20,
-                    valueType: 'PERCENTAGE',
-                    title: 'REG_DISCOUNT',
-                },
-                checkoutEmailType: 'gifterEmail',
-                checkoutAddressType: 'noAddress',
-            },
-            isAppSetupComplete: true,
-            appLevelSettingsStatus: 'started',
-            pageSettingsStatus: 'started',
-            themeSettingsStatus: 'started',
-            customisePageSettingsStatus: 'started',
-            presentStepNumber: 4,
-        },
-    ])
+    const [appConfig, setAppConfig] = useState([])
     const [loading, setLoading] = useState(true)
     const authHeader = useAuthHeader()
     const router = useRouter()
@@ -86,7 +47,7 @@ const MerchantConfig = () => {
     }, [merchantDetails?.pid, merchantDetails?.appAccessToken])
 
     return (
-        <div className="pt-[10vh] p-5 h-[100vh] w-full">
+        <div className="h-full w-full">
             <div className="h-full ">
                 {loading || !appConfig?.[0]?.pid ? (
                     loading || appConfig?.[0] ? (
@@ -129,7 +90,9 @@ const MerchantConfig = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="json-tiles">
+                        <div
+                            className={`json-tiles ${jetBrains_Mono.className}`}
+                        >
                             <h1>Address Masking</h1>
                             <div className="overflow-auto">
                                 <JsonView
@@ -141,7 +104,9 @@ const MerchantConfig = () => {
                                 />
                             </div>
                         </div>
-                        <div className="json-tiles">
+                        <div
+                            className={`json-tiles ${jetBrains_Mono.className}`}
+                        >
                             <h1>Discount Features</h1>
                             <div className="overflow-auto">
                                 <JsonView
@@ -190,4 +155,4 @@ const MerchantConfig = () => {
     )
 }
 
-export default MerchantConfig
+export default AppConfig
