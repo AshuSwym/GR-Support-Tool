@@ -42,13 +42,15 @@ const ModifyConfig = () => {
             const body = {
                 ...merchantDetails,
                 payload: {
-                    eventTypes: eventTypes.filter((value) => !(value === "")),
+                    eventTypes: eventTypes.filter((value) => !(value === '')),
                     featuresEnabled: {
                         ...featuresEnabled,
                         discountFeature: featuresEnabled?.cartCheckout
                             ? {
                                   title: featuresEnabled?.discountFeature.title,
-                                  value: 0,
+                                  value:
+                                      featuresEnabled?.discountFeature?.value ||
+                                      0,
                                   valueType: 'PERCENTAGE',
                               }
                             : {
@@ -294,36 +296,3 @@ const ModifyConfig = () => {
 }
 
 export default ModifyConfig
-
-{
-    /* <div className={`update-tiles`}>
-    <h1>Address Masking</h1>
-    <div className="overflow-auto">
-        <JsonView
-            className="text-sm sm:text-base"
-            src={featuresEnabled?.addressMasking}
-        />
-    </div>
-</div>
-<div className={`update-tiles`}>
-    <h1>Discount Features</h1>
-    <div className="overflow-auto">
-        <JsonView
-            className="text-sm sm:text-base"
-            src={featuresEnabled?.discountFeature}
-        />
-    </div>
-</div>
-<div className="w-full flex flex-col gap-2">
-    <div className="update-tiles">
-        <h1>Disable Checkout</h1>
-        {
-            featuresEnabled?.disableCheckoutOnInventoryLapse
-        }
-    </div>
-    <div className="update-tiles">
-        <h1>Vintage Toggle Metafield</h1>
-        {featuresEnabled?.vintageToggleMetafieldId}
-    </div>
-</div> */
-}

@@ -4,7 +4,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import axios from '../../../utils/axios'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import Context from '@/utils/context'
 
@@ -39,7 +39,7 @@ const Login = () => {
 
         try {
             await axios
-                .post('http://localhost:5000/user/login', {
+                .post('/user/login', {
                     ...userEntries,
                 })
                 .then((response) => {

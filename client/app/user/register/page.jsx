@@ -4,7 +4,7 @@ import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import axios from "../../../utils/axios"
 
 const Register = () => {
     const router = useRouter();
@@ -43,7 +43,6 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(userData)
         if (!isValidEmail(userData.email))
             return toast.error('Enter a valid email')
         if (userData.email === '') return toast.error('Email required')
@@ -58,7 +57,7 @@ const Register = () => {
 
         try {
             await axios
-                .post('http://localhost:5000/user/register', {
+                .post('/user/register', {
                     ...userData,
                 })
                 .then((response) => {
