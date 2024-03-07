@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const getLogs = require("./routes/getLogs");
 const auth = require("./routes/auth");
 const pid = require("./routes/getAccessTokens");
 const getData = require("./routes/getData");
@@ -36,6 +37,7 @@ app.use(
 app.get("/", (req, res) => {
 	res.send("Working fine");
 });
+app.use("/logs", getLogs);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 app.use("/user", auth);
 app.use(verifyJWT);
