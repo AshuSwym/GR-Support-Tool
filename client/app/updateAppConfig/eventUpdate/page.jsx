@@ -42,13 +42,13 @@ const ModifyConfig = () => {
             const body = {
                 ...merchantDetails,
                 payload: {
-                    eventTypes: eventTypes.filter((value) => !(value === "")),
+                    eventTypes: eventTypes.filter((value) => !(value === '')),
                     featuresEnabled: {
                         ...featuresEnabled,
                         discountFeature: featuresEnabled?.cartCheckout
                             ? {
                                   title: featuresEnabled?.discountFeature.title,
-                                  value: 0,
+                                  value: featuresEnabled?.discountFeature?.value || 0,
                                   valueType: 'PERCENTAGE',
                               }
                             : {
