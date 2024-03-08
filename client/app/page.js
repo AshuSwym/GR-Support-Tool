@@ -4,6 +4,7 @@ import { useContext, useEffect } from 'react'
 import { FlowTiles } from '@/component/flowTiles'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import Link from 'next/link'
+import Graph from '@/component/Graph'
 
 export default function Home({ isOpen, setIsOpen }) {
     const { userData, isLoading, merchantDetails } = useContext(Context)
@@ -19,6 +20,7 @@ export default function Home({ isOpen, setIsOpen }) {
                 CSS, generate charges, monitor metrics, update registries, and
                 track error logs.
             </p>
+            <Graph />
         </main>
     ) : (
         <main className="no-scrollbar w-full h-full">

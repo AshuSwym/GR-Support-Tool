@@ -4,7 +4,7 @@ import Context from '@/utils/context'
 import axios from '../../utils/axios'
 import { useContext, useEffect, useState } from 'react'
 import 'react18-json-view/src/style.css'
-import { getDate, capitalize } from '@/utils/utilFunctions'
+import { getDateWithTime, capitalize } from '@/utils/utilFunctions'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import CopyToClipboard from '@/component/ClickToCopy'
 import toast from 'react-hot-toast'
@@ -102,7 +102,7 @@ const MerchantConfig = () => {
                         </div>
                         <div className="data-tiles">
                             <h1>Installed Time</h1>
-                            {getDate(merchantConfig?.[0].installedAt)}
+                            {getDateWithTime(merchantConfig?.[0].installedAt)}
                         </div>
                         <div className="data-tiles">
                             <h1>Platform Plan</h1>

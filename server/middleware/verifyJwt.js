@@ -8,7 +8,7 @@ const verifyJWT = (req, res, next) => {
 		req.body.appAccessToken = decryptedAccessToken;
 	}
 	try {
-		if (!authHeader) res.status(401).json({ message: "Unauthorized user" });
+		if (!authHeader) return res.status(401).json({ message: "Unauthorized user" });
 		const accessToken = authHeader.split(" ")[1];
 		jwt.verify(accessToken, process.env.JWT_SECRET, (error, decoded) => {
 			if (error) {
